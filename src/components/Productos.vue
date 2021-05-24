@@ -2,7 +2,7 @@
     <b-card no-body class="overflow-hidden mt-3">
         <b-row no-gutters>
             <b-col md="6">
-                <b-card-img :src="'/images/'+product.imagen" alt="Image" class="rounded-0" v-on:click="redirect(product.id,$event)"></b-card-img>
+                <b-card-img :src="urlImgPath" alt="Image" class="rounded-0" v-on:click="redirect(product.id,$event)"></b-card-img>
             </b-col>
             <b-col md="6">
                 <b-card-body :title="product.instrumento">
@@ -31,10 +31,25 @@
     export default {
         name: 'Productos',
         props: ["product"],
+        data() {
+            return {
+                urlImgPath: 'images/notImg.png'
+            };
+        },
+        mounted() {
+            this.getImageById(this.product.id);
+        },
         methods: {
             redirect: function(id, event) {
                 event.preventDefault();
                 this.$router.push(`instrumento/${id}`);
+            },
+            getImageById: function(id) {
+                fetch(`http://localhost:8080/api/v1/crud/instrumento/uploads/img/${id}`)
+                    .then( response => {
+                        if(response.status !== 500) this.urlImgPath = response.url;
+                    })
+                    .catch(e => console.error('error',e));
             }
         }
     }

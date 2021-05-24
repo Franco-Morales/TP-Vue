@@ -2,7 +2,7 @@
     <b-container class="mt-5">
         <b-row>
             <b-col xs lg="8">
-                <img :src="'/images/'+instrumento.imagen" alt="Imagen Producto" />
+                <img :src="imgPath" alt="Imagen Producto" />
                 <h4>Descripción</h4>
                 <p>{{instrumento.descripcion}}</p>
             </b-col>
@@ -35,15 +35,21 @@
         },
         data() {
             return {
-                instrumento: {}
+                instrumento: {},
+                imgPath: "images/notImg.png"
             };
         },
         methods: {
             async getOneInstrumento() {
                 let { id } = this.$route.params;
-                const res = await fetch("/instrumentos.json");
-                let resJsonParsed = await res.json();
-                this.instrumento = resJsonParsed.instrumentos.find(element => element.id == id);
+
+                const response = await fetch(`http://localhost:8080/api/v1/crud/instrumento/${id}`);
+                let dataInstrumento = await response.json();
+                this.instrumento = dataInstrumento;
+
+                const responseImg = await fetch(`http://localhost:8080/api/v1/crud/instrumento/uploads/img/${id}`);
+                let dataIImgPath = responseImg.url;
+                this.imgPath = dataIImgPath;
             }
         }
     }

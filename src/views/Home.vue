@@ -52,9 +52,13 @@ export default {
   },
   methods: {
     async getAllInstrumentos() {
-      const res = await fetch("/instrumentos.json");
-      let resJsonParsed = await res.json();
-      this.instrumentos = resJsonParsed.instrumentos;
+      try {
+        const response = await fetch("http://localhost:8080/api/v1/crud/instrumento/");
+        let data = await response.json();
+        this.instrumentos = data;
+      } catch (error) {
+        console.error(error);
+      }
     }
   } 
 }
