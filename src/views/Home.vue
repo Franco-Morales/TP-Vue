@@ -43,24 +43,13 @@ export default {
     "card-producto": Productos
   },
   mounted() {
-    this.getAllInstrumentos();
+    this.$store.dispatch('getInstrumentos');
   },
-  data() {
-    return {
-      instrumentos: []
-    };
-  },
-  methods: {
-    async getAllInstrumentos() {
-      try {
-        const response = await fetch("http://localhost:8080/api/v1/crud/instrumento/");
-        let data = await response.json();
-        this.instrumentos = data;
-      } catch (error) {
-        console.error(error);
-      }
+  computed: {
+    instrumentos() {
+      return this.$store.state.instrumentos;
     }
-  } 
+  }
 }
 </script>
 

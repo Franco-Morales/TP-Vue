@@ -9,7 +9,7 @@
                     <b-card-text class="font-weight-bold">
                         {{product.precio}}$
                     </b-card-text>
-                    <template v-if="product.costoEnvio !== 'G'">
+                    <template v-if="product.costoEnvio">
                         <p class="text-warning">Costo de Envio Interior de Argentina : {{product.costoEnvio}}$</p>
                     </template>
                     <template v-else>

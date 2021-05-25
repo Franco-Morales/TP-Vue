@@ -7,6 +7,7 @@
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item href="/">Home</b-nav-item>
                     <router-link to="#productos-info" class="nav-link">Productos</router-link>
+                    <router-link to="/crud" class="nav-link">Crud</router-link>
                 </b-navbar-nav>
             </b-collapse>
         </b-container>
